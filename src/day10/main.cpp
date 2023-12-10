@@ -230,9 +230,9 @@ void part1()
 		}
 	}
 
-	//printGrid();
-	std::cerr << "PART1 answer = " << answer1 << endl;
-	std::cerr << "PART2 answer = " << answer2 << endl;
+	printGrid();
+	std::cerr << "PART1 answer = " << answer1 << endl; //6882
+	std::cerr << "PART2 answer = " << answer2 << endl; //491
 
 	dave::PngWrite png(bw, bh);
 	for(int y = 0; y < bh; y++)
@@ -240,8 +240,26 @@ void part1()
 		for(int x = 0; x < bw; x++)
 		{
 			if(bitmap[y][x] == 0) png.setPixel(x, y, dave::Color::BLUE);
-			else if(bitmap[y][x] == 1) png.setPixel(x, y, dave::Color::WHITE);
-			else if(bitmap[y][x] == 9) png.setPixel(x, y, dave::Color::BLACK);
+			else if(bitmap[y][x] == 1) png.setPixel(x, y, dave::Color::BLACK);
+			else if(bitmap[y][x] == 9) png.setPixel(x, y, dave::Color::WHITE);
+		}
+	}
+	for(int r = 0; r < h; r++)
+	{
+		for(int c = 0; c < w; c++)
+		{
+			if(bitmap[r*3+1][c*3+1] == 0)
+			{
+				png.setPixel(c*3  , r*3  , dave::Color::GREEN);
+				png.setPixel(c*3+1, r*3  , dave::Color::GREEN);
+				png.setPixel(c*3+2, r*3  , dave::Color::GREEN);
+				png.setPixel(c*3  , r*3+2, dave::Color::GREEN);
+				png.setPixel(c*3+1, r*3+2, dave::Color::GREEN);
+				png.setPixel(c*3+2, r*3+2, dave::Color::GREEN);
+				png.setPixel(c*3  , r*3+1, dave::Color::GREEN);
+				png.setPixel(c*3+1, r*3+1, dave::Color::GREEN);
+				png.setPixel(c*3+2, r*3+1, dave::Color::GREEN);
+			}
 		}
 	}
 	png.writeFile("aoc2023d10.png");
