@@ -231,8 +231,8 @@ void part1()
 	}
 
 	//printGrid();
-	std::cerr << "PART1 answer = " << answer1 << endl; //6882
-	std::cerr << "PART2 answer = " << answer2 << endl; //491
+	std::cerr << "PART1 answer = " << answer1 << endl;
+	std::cerr << "PART2 answer = " << answer2 << endl;
 
 	dave::PngWrite png(bw, bh);
 	for(int y = 0; y < bh; y++)
