@@ -2,8 +2,6 @@
 #include<string>
 #include<vector>
 #include<queue>
-#include<algorithm>
-#include<numeric>
 #include"ReadFile.h"
 #include"StrUtils.h"
 #include"MyPng.h"
@@ -31,6 +29,13 @@ public:
 	int c, r;
 	int dist;
 };
+
+void initBitmap()
+{
+	for(int r = 0; r < bh; r++)
+		for(int c = 0; c < bw; c++)
+			bitmap[r][c] = 0;
+}
 
 void setBitmap(char ch, int c, int r)
 {
@@ -165,7 +170,7 @@ void printGrid()
 	}
 }
 
-void part1()
+void calc()
 {
 	int answer1 = 0;
 	queue<Pos> todo;
@@ -209,12 +214,11 @@ void part1()
 	////////////////////
 
 	todo.emplace(0, 0, 0);
+	bitmap[0][0] = 9;
 	while(!todo.empty())
 	{
 		Pos pos = todo.front();
 		todo.pop();
-		bitmap[pos.r][pos.c] = 9;
-
 		if((pos.r-1) >= 0 && bitmap[pos.r-1][pos.c] == 0) { bitmap[pos.r-1][pos.c] = 9; todo.emplace(pos.c,   pos.r-1, 0); }
 		if((pos.r+1) < bh && bitmap[pos.r+1][pos.c] == 0) { bitmap[pos.r+1][pos.c] = 9; todo.emplace(pos.c,   pos.r+1, 0); }
 		if((pos.c-1) >= 0 && bitmap[pos.r][pos.c-1] == 0) { bitmap[pos.r][pos.c-1] = 9; todo.emplace(pos.c-1, pos.r,   0); }
@@ -230,17 +234,17 @@ void part1()
 		}
 	}
 
-	printGrid();
-	std::cerr << "PART1 answer = " << answer1 << endl;
-	std::cerr << "PART2 answer = " << answer2 << endl;
+	//printGrid();
+	cout << "PART1 answer = " << answer1 << endl; //6882
+	cout << "PART2 answer = " << answer2 << endl; //491
 
 	dave::PngWrite png(bw, bh);
 	for(int y = 0; y < bh; y++)
 	{
 		for(int x = 0; x < bw; x++)
 		{
-			if(bitmap[y][x] == 0) png.setPixel(x, y, dave::Color::BLUE);
-			else if(bitmap[y][x] == 1) png.setPixel(x, y, dave::Color::BLACK);
+			if(bitmap[y][x] == 0) png.setPixel(x, y, dave::Color::GREEN1);
+			else if(bitmap[y][x] == 1) png.setPixel(x, y, dave::Color::DARKGRAY);
 			else if(bitmap[y][x] == 9) png.setPixel(x, y, dave::Color::WHITE);
 		}
 	}
@@ -250,15 +254,15 @@ void part1()
 		{
 			if(bitmap[r*3+1][c*3+1] == 0)
 			{
-				png.setPixel(c*3  , r*3  , dave::Color::GREEN);
-				png.setPixel(c*3+1, r*3  , dave::Color::GREEN);
-				png.setPixel(c*3+2, r*3  , dave::Color::GREEN);
-				png.setPixel(c*3  , r*3+2, dave::Color::GREEN);
-				png.setPixel(c*3+1, r*3+2, dave::Color::GREEN);
-				png.setPixel(c*3+2, r*3+2, dave::Color::GREEN);
-				png.setPixel(c*3  , r*3+1, dave::Color::GREEN);
-				png.setPixel(c*3+1, r*3+1, dave::Color::GREEN);
-				png.setPixel(c*3+2, r*3+1, dave::Color::GREEN);
+				png.setPixel(c*3  , r*3  , dave::Color::BLUE);
+				png.setPixel(c*3+1, r*3  , dave::Color::BLUE);
+				png.setPixel(c*3+2, r*3  , dave::Color::BLUE);
+				png.setPixel(c*3  , r*3+2, dave::Color::BLUE);
+				png.setPixel(c*3+1, r*3+2, dave::Color::BLUE);
+				png.setPixel(c*3+2, r*3+2, dave::Color::BLUE);
+				png.setPixel(c*3  , r*3+1, dave::Color::BLUE);
+				png.setPixel(c*3+1, r*3+1, dave::Color::BLUE);
+				png.setPixel(c*3+2, r*3+1, dave::Color::BLUE);
 			}
 		}
 	}
@@ -270,9 +274,7 @@ void part1()
 int main(int argc, char *args[])
 {
 	readInput();
-	for(int r = 0; r < bh; r++)
-		for(int c = 0; c < bw; c++)
-			bitmap[r][c] = 0;
-	part1();
+	initBitmap();
+	calc();
 	return 0;
 }
