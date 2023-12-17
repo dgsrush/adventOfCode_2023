@@ -43,7 +43,7 @@ public:
 		bool fnd = false;
 		std::vector<LL>::iterator it;
 		for(it = vals.begin() ; it != vals.end(); it++)
-    	{
+		{
 			if(it->label == label)
 			{
 				fnd = true;
@@ -58,7 +58,7 @@ public:
 	{
 		std::vector<LL>::iterator it;
 		for(it = vals.begin() ; it != vals.end(); it++)
-    	{
+		{
 			if(it->label == label)
 			{
 				vals.erase(it);
